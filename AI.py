@@ -48,6 +48,7 @@ jsonModel = """
     "senses": "string",
     "languages": "string",
     "challengeRating": "number",
+    "fightingStyle": "string",
     "actions": [
     {
         "name": "string",
@@ -61,10 +62,20 @@ jsonModel = """
 }
 """
 
+    # "legendaryActions": [
+    # {
+    #     "name": "string",
+    #     "description": "string"
+    # },
+    # {
+    #     "name": "Stomp",
+    #     "description": "string"
+    # }
+    # ]
 
 def run_job(monster):
     messages = [
-        {"role": "user", "content": f"make a monster for dnd, stat block, description, and fighting style for a {monster}.  Skip any extra text stick to just the content, return JSON that looks like {jsonModel}"},
+        {"role": "user", "content": f"make a monster for dnd, stat block, description, fighting style for a {monster}.  Only include legendary actions if the monster is legendary.  Skip any extra text stick to just the content, return JSON that looks like {jsonModel}"},
     ]
 
     response = completion = client.chat.completions.create(

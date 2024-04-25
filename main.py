@@ -37,7 +37,6 @@ def process_file():
     monster_dict = json.loads(ai_result)
 
     formatted_stat_block = format_dnd_stat_block(monster_dict)
-    print("Done making monster")
 
     return formatted_stat_block  # Return plain text
 
@@ -46,63 +45,121 @@ def format_dnd_stat_block(monster):
     """Formats the given monster dictionary into a D&D-style stat block with HTML."""
 
     stat_block = f"""
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>{monster['name']} Stat Block</title>
-        <style>
-            /* Basic Styling */
-            body {{ font-family: sans-serif; margin: 10px; }}
-            .stat-block {{ border: 1px solid #ddd; padding: 10px; border-radius: 5px; display: flex; flex-direction: column; }}
-            .stat-block h2 {{ text-align: center; }}
-            .stat-info {{ display: flex; justify-content: space-between; margin-bottom: 5px; }}
-            .stat-info > span:nth-child(1) {{ font-weight: bold; }}
-            .abilities {{ display: flex; flex-wrap: wrap; margin-bottom: 10px; }}
-            .ability {{ flex: 1; text-align: center; padding: 5px; margin: 2px; border: 1px solid #eee; border-radius: 3px; }}
-            .ability span:nth-child(2) {{ font-weight: bold; }}
-            .actions {{ border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px; }}
-            .action {{ margin-bottom: 5px; }}
-        </style>
-    </head>
-    <body>
-        <div class="stat-block">
-            <h2>{monster['name']}</h2>
-            <div class="stat-info"><span>Size</span><span>{monster['size']}, {monster['alignment']}</span></div>
-            <div class="stat-info"><span>Armor Class</span><span>{monster['ac']} ({monster.get('armorType', '')})</span></div>
-            <div class="stat-info"><span>Hit Points</span><span>{monster['hp']} ({monster['hpCalculation']})</span></div>
-            <div class="stat-info"><span>Speed</span><span>{monster['speed']}</span></div>
-
-            <div class="abilities">
-                <div class="ability"><strong>STR</strong><br><span>{monster['str']} ({calculate_modifier(monster['str'])})</span></div>
-                <div class="ability"><strong>DEX</strong><br><span>{monster['dex']} ({calculate_modifier(monster['dex'])})</span></div>
-                <div class="ability"><strong>CON</strong><br><span>{monster['con']} ({calculate_modifier(monster['con'])})</span></div>
-                <div class="ability"><strong>INT</strong><br><span>{monster['int']} ({calculate_modifier(monster['int'])})</span></div>
-                <div class="ability"><strong>WIS</strong><br><span>{monster['wis']} ({calculate_modifier(monster['wis'])})</span></div>
-                <div class="ability"><strong>CHA</strong><br><span>{monster['cha']} ({calculate_modifier(monster['cha'])})</span></div>
-            </div>
-
-            <div class="stat-info"><span>Saving Throws</span><span>{monster.get('savingThrows', '')}</span></div>
-            <div class="stat-info"><span>Skills</span><span>{monster.get('skills', '')}</span></div>
-            <div class="stat-info"><span>Damage Resistances</span><span>{monster.get('damageResistances', '')}</span></div>
-            <div class="stat-info"><span>Damage Immunities</span><span>{monster.get('damageImmunities', '')}</span></div>
-            <div class="stat-info"><span>Condition Immunities</span><span>{monster.get('conditionImmunities', '')}</span></div>
-                        <div class="stat-info"><span>Senses</span><span>{monster.get('senses', '')}</span></div>
-            <div class="stat-info"><span>Languages</span><span>{monster.get('languages', '')}</span></div>
-            <div class="stat-info"><span>Challenge</span><span>{monster['challengeRating']}</span></div>
-
-            <div class="properties">
-                <h3>Properties</h3>
-                {format_properties(monster.get('properties', []))}
-            </div>
-            <div class="actions">
-                <h3>Actions</h3>
-                {format_actions(monster.get('actions', []))}
+        <div class="stat-block wide">
+        	<hr class="orange-border" />
+            <div class="section-left">
+                <div class="creature-heading">
+                    <h1>{monster['name']}</h1>
+                    <h2> {monster['size']}, {monster['alignment']} </h2>
+                </div>
+                <svg height="5" width="100%" class="tapered-rule">
+                    <polyline points="0,0 400,2.5 0,5"></polyline>
+                </svg>
+                <div class="top-stats">
+                    <div class="property-line first">
+                        <h4>Armor Class</h4>
+                        <p>{monster['hp']} ({monster['hpCalculation']})</p>
+                    </div> <!-- property line -->
+                    <div class="property-line last">
+                        <h4>Speed</h4>
+                        <p>{monster['speed']}</p>
+                    </div> <!-- property line -->
+                    <svg height="5" width="100%" class="tapered-rule">
+                        <polyline points="0,0 400,2.5 0,5"></polyline>
+                    </svg>
+                </div>
+			    <div class="abilities">
+                    <div class="ability-strength">
+                        <h4>STR</h4>
+                        <p>{monster['str']} ({calculate_modifier(monster['str'])})</p>
+                    </div> <!-- ability strength -->
+                    <div class="ability-dexterity">
+                        <h4>DEX</h4>
+                        <p>{monster['dex']} ({calculate_modifier(monster['dex'])})</p>
+                    </div> <!-- ability dexterity -->
+                    <div class="ability-constitution">
+                        <h4>CON</h4>
+                        <p>{monster['con']} ({calculate_modifier(monster['con'])})</p>
+                    </div> <!-- ability constitution -->
+                    <div class="ability-intelligence">
+                        <h4>INT</h4>
+                        <p>{monster['int']} ({calculate_modifier(monster['int'])})</p>
+                    </div> <!-- ability intelligence -->
+                    <div class="ability-wisdom">
+                        <h4>WIS</h4>
+                        <p>{monster['wis']} ({calculate_modifier(monster['wis'])})</p>
+                    </div> <!-- ability wisdom -->
+                    <div class="ability-charisma">
+                        <h4>CHA</h4>
+                        <p>{monster['cha']} ({calculate_modifier(monster['cha'])})</p>
+                    </div> <!-- ability charisma -->
+                </div> <!-- abilities -->
+                <svg height="5" width="100%" class="tapered-rule">
+                    <polyline points="0,0 400,2.5 0,5"></polyline>
+                </svg>
+                <div class="property-line first">
+                    <h4>Damage Immunities</h4>
+                    <p{monster.get('damageImmunities', '')}</p>
+			    </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Condition Immunities</h4>
+                    <p>{monster.get('conditionImmunities', '')}</p>
+                </div> <!-- property line -->            
+                <div class="property-line">
+                    <h4>Senses</h4>
+                    <p>{monster.get('senses', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Languages</h4>
+                    <p{monster.get('languages', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Challenge Rating</h4>
+                    <p>{monster.get('challengeRating', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Saving Throws</h4>
+                    <p>{monster.get('savingThrows', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Skills</h4>
+                    <p>{monster.get('skills', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Damage Resistancees</h4>
+                    <p>{monster.get('damageResistances', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Damage Immunities</h4>
+                    <p>{monster.get('damageImmunities', '')}</p>
+                </div> <!-- property line -->
+                <div class="property-line">
+                    <h4>Condition Immunities</h4>
+                    <p>{monster.get('conditionImmunities', '')}</p>
+                </div> <!-- property line -->
+                <svg height="5" width="100%" class="tapered-rule">
+                    <polyline points="0,0 400,2.5 0,5"></polyline>
+                </svg>
+                <div class="property-block">
+                    <h4>Properties</h4>
+                    <p>{format_properties(monster.get('properties', []))}</p>
+                </div>
+            </div> <!-- section left -->
+            <div class="section-right">            
+                <div class="actions">
+                    <h3>Fighting Style</h3>
+                    <p>{monster.get('fightingStyle', '')}</p>
+                </div>
+                <div class="actions">
+                    <h3>Actions</h3>
+                    {format_actions(monster.get('actions', []))}
+                </div>
+                <!-- <div class="actions">
+                    <h3>Legendary Actions</h3>
+                    {format_actions(monster.get('legendaryActions', []))}
+                </div> -->
             </div>
         </div>
-    </body>
-    </html>
     """  # Added closing </html> </body> tags
     return stat_block
 
@@ -118,7 +175,7 @@ def format_properties(properties):
         )
 
     # Join properties with breaks for readability
-    return "<br>".join(formatted_properties)
+    return "".join(formatted_properties)
 
 
 def format_actions(actions):
@@ -128,10 +185,10 @@ def format_actions(actions):
     formatted_actions = []
     for action in actions:
         formatted_actions.append(
-            f"<strong>{action['name']}:</strong> {remove_extra_desc(action['description'])}"
+            f"<div class='property-block'><h4>{action['name']}:</h4><p>{remove_extra_desc(action['description'])}</p></div>"
         )
 
-    return "<br>".join(formatted_actions)
+    return "".join(formatted_actions)
 
 
 def remove_extra_desc(description):
