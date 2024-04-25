@@ -4,29 +4,41 @@
     <meta charset="UTF-8">
     <title>D&D AI Monster</title>
     <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.12/dist/ext/loading-states.js"></script>
+
+    <style>
+        .hidden{
+            display:none;
+        }
+        .htmx-request .htmx-indicator{
+            display:inline;
+        }
+        .htmx-request.htmx-indicator{
+            display:inline;
+        }
+        [data-loading] {
+            display: none;
+          }
+    </style>
 </head>
-<body>
+<body hx-ext="loading-states">
     <h1>D&D AI Monster</h1>
-    <h1>Enter your text</h1>
+    <h1>Enter your monster description</h1>
 
-
-    <form hx-post="/monster-maker" hx-target="#result">
-        <input type="text" id="textbox" name="user_input">
-        <button type="submit">Make me a monster</button> 
+    <form hx-post="/monster-maker" 
+        hx-target="#result"  
+        hx-swap="innerHTML"
+        data-loading-target="#loading"
+        data-loading-class-remove="hidden"
+        id="monster-maker"> 
+        <input type="text" name="user_input" id="user_input" data-loading-disable>
+        <button type="submit" data-loading-disable>
+            Make Monster
+        </button>
     </form>
+    <img id="loading" class="hidden" src="/spinner.svg">
 
-    <div id="result"></div>
-    
-
-    <script>
-        document.getElementById('fileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            // Simple validation (you can add more checks)
-            if (!file.type.startsWith('text/')) {
-                alert("Please upload a text file.");
-                this.value = ''; // Clear the file input
-            }
-        });
-    </script>
+    <div id="result">
+    </div>
 </body>
 </html>

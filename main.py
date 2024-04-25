@@ -22,17 +22,25 @@ def index():
     return render_template('index.html')
 
 
+@app.route('/spinner.svg')
+def serve_loading_gif():
+    return send_from_directory('static', 'spinner.svg')
+
+
 @app.route('/monster-maker', methods=['POST'])
 def process_file():
     user_input = request.form['user_input']
+    print(f"Making a {user_input} monster")
+
     ai_result = run_job(user_input)
 
     monster_dict = json.loads(ai_result)
 
     formatted_stat_block = format_dnd_stat_block(monster_dict)
-    # print(formatted_stat_block)
+    print("Done making monster")
 
     return formatted_stat_block  # Return plain text
+
 
 def format_dnd_stat_block(monster):
     """Formats the given monster dictionary into a D&D-style stat block with HTML."""
