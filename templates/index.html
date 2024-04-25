@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>D&D AI Monster</title>
+    <script src="https://unpkg.com/htmx.org@1.9.4"></script>
+</head>
+<body>
+    <h1>D&D AI Monster</h1>
+    <h1>Enter your text</h1>
+
+
+    <form hx-post="/monster-maker" hx-target="#result">
+        <input type="text" id="textbox" name="user_input">
+        <button type="submit">Make me a monster</button> 
+    </form>
+
+    <div id="result"></div>
+    
+
+    <script>
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            // Simple validation (you can add more checks)
+            if (!file.type.startsWith('text/')) {
+                alert("Please upload a text file.");
+                this.value = ''; // Clear the file input
+            }
+        });
+    </script>
+</body>
+</html>
