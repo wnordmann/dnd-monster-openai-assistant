@@ -58,6 +58,10 @@ def format_dnd_stat_block(monster):
                 <div class="top-stats">
                     <div class="property-line first">
                         <h4>Armor Class</h4>
+                        <p>{monster['ac']}</p>
+                    </div> <!-- property line -->
+                    <div class="property-line first">
+                        <h4>Hit Points</h4>
                         <p>{monster['hp']} ({monster['hpCalculation']})</p>
                     </div> <!-- property line -->
                     <div class="property-line last">
@@ -142,7 +146,7 @@ def format_dnd_stat_block(monster):
                 </svg>
                 <div class="property-block">
                     <h4>Properties</h4>
-                    <p>{format_properties(monster.get('properties', []))}</p>
+                    <p>{format_actions(monster.get('properties', []))}</p>
                 </div>
             </div> <!-- section left -->
             <div class="section-right">            

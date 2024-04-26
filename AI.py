@@ -62,16 +62,17 @@ jsonModel = """
 }
 """
 
-    # "legendaryActions": [
-    # {
-    #     "name": "string",
-    #     "description": "string"
-    # },
-    # {
-    #     "name": "Stomp",
-    #     "description": "string"
-    # }
-    # ]
+# "legendaryActions": [
+# {
+#     "name": "string",
+#     "description": "string"
+# },
+# {
+#     "name": "Stomp",
+#     "description": "string"
+# }
+# ]
+
 
 def run_job(monster):
     messages = [
